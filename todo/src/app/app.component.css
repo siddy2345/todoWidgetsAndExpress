@@ -1,0 +1,23 @@
+ul {
+  list-style: none;
+  background-color: black;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  float: left;
+}
+
+.logoLink {
+  float: right;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  padding: 1rem 1rem;
+  color: white;
+}
+

@@ -1,0 +1,19 @@
+<p>todo-widgets works!</p>
+
+<div class="todoAdd">
+  <app-todo-add [isAddWidget]="true"></app-todo-add>
+</div>
+<div class="widgets">
+  <div class="todoWidget" *ngFor="let number of [0,1,2,3,4,5]">
+    <div class="widgetTitle">
+      <h5>Titel {{number}}</h5>
+      <button>Delete</button>
+    </div>
+    <div *ngFor="let number of [0,1,2,3,4,5]">
+      <app-todo-item class="todoAddWidget"></app-todo-item>
+
+    </div>
+
+  </div>
+
+</div>

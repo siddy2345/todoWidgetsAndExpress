@@ -1,0 +1,10 @@
+
+.addTodoWidget > form {
+  padding: 1rem 1rem;
+  background-color: gainsboro;
+}
+
+.addTodoWidget {
+  width: fit-content;
+}
+

@@ -1,0 +1,13 @@
+<div class="addTodoWidget">
+  <form>
+    <input #widgetTitle type="text">
+    <div *ngIf="isAddWidget then buttonAddWidget; else buttonAddTodoToWidget"></div>
+    <ng-template #buttonAddWidget>
+      <button type="button" (click)="addWidget(widgetTitle)">+ Erstellen</button>
+    </ng-template>
+    <ng-template #buttonAddTodoToWidget>
+      <button type="button" (click)="addWidget(widgetTitle)">+</button>
+    </ng-template>
+  </form>
+
+</div>
