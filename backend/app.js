@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { appendTodo, clearTodos, getTodos } from '../lib/todo.js';
+import { appendTodo, clearTodo, clearTodos, getTodos } from '../lib/todo.js';
 import path from 'path'
 const app = express();
 
@@ -30,8 +30,8 @@ app.get('/todo', async function(req, res) {
  * - send status 201 as confirmation
  */
 app.post('/todo', async function(req, res) {
-  console.log('was here');
-  const input = req.body.todo;
+  // console.log(req);
+  const input = req.body.todoWidget;
   if(!input) {
     res.sendStatus(400);
     return;
@@ -46,8 +46,20 @@ app.post('/todo', async function(req, res) {
  * - remove all todos
  * - send status 204 as confirmation
  */
-app.delete('/todo', async function(req, res) {
-  clearTodos();
+// app.delete(`/todo`, async function(req, res) {
+//   console.log();
+//   clearTodos();
+//   res.sendStatus(204);
+// });
+
+/**
+ * TASK:
+ * - remove just one todo
+ * - send status 204 as confirmation
+ */
+app.delete(`/todo/:id`, async function(req, res) {
+  // console.log(req.params.id);
+  clearTodo(req.params.id);
   res.sendStatus(204);
 });
 

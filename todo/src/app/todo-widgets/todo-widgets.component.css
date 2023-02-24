@@ -9,6 +9,10 @@
   /* align-items: flex-start; */
 }
 
+.todoAdd {
+  padding-top: 1rem;
+}
+
 h5 {
   justify-content: flex-start;
   display: inline;
@@ -18,8 +22,8 @@ h5 {
 
 .widgets {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  gap: 1rem;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
 }
 
 .widgetTitle {

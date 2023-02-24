@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { finalize, map, tap } from 'rxjs';
+import { TodoModel } from '../shared/models';
+import { TodoServiceService } from '../shared/todo-service.service';
 
 @Component({
   selector: 'app-todo-widgets',
@@ -7,9 +10,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TodoWidgetsComponent implements OnInit {
 
-  constructor() { }
+  @Input() todoWidgets: TodoModel[] = [];
+  public previousTodoWidgets: TodoModel[] = [];
+
+  constructor(private todoService: TodoServiceService) { }
 
   ngOnInit(): void {
+    this.getWidgets();
   }
 
+  getWidgets(): void {
+    this.todoService.getTodoWidgets().subscribe(r => this.todoWidgets = r);
+  }
+
+  onDelete(widget: TodoModel): void {
+    this.todoService.deleteTodo(widget.id).pipe(
+      finalize(() => this.todoWidgets.splice(this.todoWidgets.indexOf(widget), 1))
+    ).subscribe();
+  }
 }
