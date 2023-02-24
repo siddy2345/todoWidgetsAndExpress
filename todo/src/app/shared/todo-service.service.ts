@@ -19,17 +19,59 @@ export class TodoServiceService {
     return res;
   }
 
-  getTodoWidget(id: number): Observable<TodoModel> {
-    return of();
+  getTasks(): Observable<TaskModel[]> {
+    const res = this.http.get<TaskModel[]>(`${this.api}/task`);
+
+    return res;
   }
+
+  // getTodoWidget(id: number): Observable<TodoModel> {
+  //   return of();
+  // }
 
   getTodoViewModels(): Observable<TodoViewModel[]> {
-    return of();
+    console.log("o");
+
+    const todos = this.http.get<TodoModel[]>(this.api);
+    const tasks = this.http.get<TaskModel[]>(`${this.api}/task`);
+
+    const todoList: TodoModel[] = [];
+    const taskList: TaskModel[] = [];
+
+    todos.subscribe(t => todoList.push(...t));
+    tasks.subscribe(t => taskList.push(...t));
+
+    console.log(todoList);
+    console.log(taskList);
+
+    const todoViewModel: TodoViewModel[] = [];
+    let tvmId: number = 1;
+
+    todoList.forEach(todo => {
+      const tasksPerTodo: TaskModel[] = [];
+
+      taskList.forEach(task => {
+        if(todo.id === task.id)
+          tasksPerTodo.push(task);
+      });
+
+      const tvm: TodoViewModel = {
+        id: tvmId++,
+        title: todo.title,
+        tasks: taskList,
+        createdAt: new Date(),
+        editedAt: new Date()
+      }
+
+      todoViewModel.push(tvm);
+    });
+
+    return of(todoViewModel);
   }
 
-  getTodoViewModel(): Observable<TodoViewModel> {
-    return of();
-  }
+  // getTodoViewModel(): Observable<TodoViewModel> {
+  //   return of();
+  // }
 
   postTodo(todoWidget: TodoModel): Observable<number> {
     // localStorage.setItem(todoWidget.id.toString(), JSON.stringify(todoWidget));
@@ -38,8 +80,10 @@ export class TodoServiceService {
     return res.pipe(map(r => +JSON.parse(JSON.stringify(r)).id)); // get the id from the response json
   }
 
-  postTask(todoWidgetId: number, todo: TaskModel): Observable<number> {
-    return of();
+  postTask(todoWidgetId: number, task: TaskModel): Observable<number> {
+    const res = this.http.post(`${this.api}/task`, {task}, {responseType: 'json'});
+
+    return res.pipe(map(r => +JSON.parse(JSON.stringify(r)).id)); // get the id from the response json)
   }
 
   putTask(todoWidgetId: number, todoId: number, todo: TaskModel): Observable<void> {

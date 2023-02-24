@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { finalize, map, tap } from 'rxjs';
-import { TodoModel } from '../shared/models';
+import { TodoModel, TodoViewModel } from '../shared/models';
 import { TodoServiceService } from '../shared/todo-service.service';
 
 @Component({
@@ -10,7 +10,8 @@ import { TodoServiceService } from '../shared/todo-service.service';
 })
 export class TodoWidgetsComponent implements OnInit {
 
-  @Input() todoWidgets: TodoModel[] = [];
+  @Input() todoWidgets: TodoViewModel[] = [];
+  @Input() todoTasks: TodoViewModel[] = [];
   public previousTodoWidgets: TodoModel[] = [];
 
   constructor(private todoService: TodoServiceService) { }
@@ -20,12 +21,17 @@ export class TodoWidgetsComponent implements OnInit {
   }
 
   getWidgets(): void {
-    this.todoService.getTodoWidgets().subscribe(r => this.todoWidgets = r);
+    this.todoService.getTodoViewModels().subscribe(r => console.log(r));
   }
 
-  onDelete(widget: TodoModel): void {
+  onDelete(widget: TodoViewModel): void {
     this.todoService.deleteTodo(widget.id).pipe(
       finalize(() => this.todoWidgets.splice(this.todoWidgets.indexOf(widget), 1))
     ).subscribe();
   }
+
+  getTasks(): void {
+
+  }
+
 }

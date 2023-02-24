@@ -1,12 +1,13 @@
 <div class="addTodoWidget">
   <form>
-    <input #widgetTitle type="text" (keydown.enter)="addWidget(widgetTitle, $event)">
     <div *ngIf="isAddWidget then buttonAddWidget; else buttonAddTodoToWidget"></div>
     <ng-template #buttonAddWidget>
-      <button type="button" (click)="addWidget(widgetTitle, $event)">+ Erstellen</button>
+      <input #titleTodo type="text" (keydown.enter)="addWidget(titleTodo, $event)">
+      <button type="button" name="buttonAddWidget" (click)="addWidget(titleTodo, $event)">+ Erstellen</button>
     </ng-template>
     <ng-template class="addInWidget" #buttonAddTodoToWidget>
-      <button type="button" (click)="addWidget(widgetTitle, $event)">+</button>
+      <input #titleTask type="text" (keydown.enter)="addTask(titleTask, $event)">
+      <button type="button" name="buttonAddTodoToWidget" (click)="addTask(titleTask, $event)">+</button>
     </ng-template>
   </form>
 

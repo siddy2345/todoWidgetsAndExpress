@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { appendTodo, clearTodo, clearTodos, getTodos } from '../lib/todo.js';
+import { appendTask, appendTodo, clearTodo, clearTodos, getTasks, getTodos } from '../lib/todo.js';
 import path from 'path'
 const app = express();
 
@@ -23,6 +23,12 @@ app.get('/todo', async function(req, res) {
   res.status(200).send(todos);
 });
 
+app.get('/todo/task', async function(req, res) {
+  const tasks = await getTasks();
+  console.log(tasks);
+  res.status(200).send(tasks);
+});
+
 /**
  * TASK:
  * - handle wrong input (send status 400)
@@ -38,6 +44,18 @@ app.post('/todo', async function(req, res) {
   }
   
   await appendTodo(input);
+  res.status(201).send(input);
+});
+
+app.post('/todo/task', async function(req, res) {
+  // console.log(req.body.task);
+  const input = req.body.task;
+  if(!input) {
+    res.sendStatus(400);
+    return;
+  }
+  
+  await appendTask(input);
   res.status(201).send(input);
 });
 

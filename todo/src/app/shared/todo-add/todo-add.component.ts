@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { lastValueFrom, tap } from 'rxjs';
-import { TodoModel } from '../models';
+import { TaskModel, TodoModel } from '../models';
 import { TodoServiceService } from '../todo-service.service';
 
 @Component({
@@ -11,11 +11,14 @@ import { TodoServiceService } from '../todo-service.service';
 export class TodoAddComponent implements OnInit {
 
   @Input() isAddWidget?: boolean;
+  @Input() todoId?: number;
   @Output() addWidgetEvent = new EventEmitter<number>();
+  @Output() addTaskEvent = new EventEmitter<number>();
 
   constructor(private todoService: TodoServiceService) {}
 
   private _latestTodoWidget: number = 1;
+  private _latestTask: number = 1;
 
   ngOnInit(): void {
   }
@@ -44,12 +47,35 @@ export class TodoAddComponent implements OnInit {
     input.value = '';
   }
 
+  public async addTask(input: HTMLInputElement, event: Event) {
+    event.preventDefault();
+
+    await this.getTasks();
+
+    // console.log(this.widgetId);
+
+    let taskModel: TaskModel;
+
+    if(this.todoId) {
+      taskModel = {
+        id: this._latestTask,
+        title: input.value,
+        isDone: false,
+        todoId: this.todoId
+      };
+
+      this.todoService.postTask(0, taskModel).subscribe(newTask =>
+        this.addTaskEvent.emit(newTask)
+      );
+
+      input.value = '';
+    }
+  }
+
   async getTodoWidgets(): Promise<void> {
     const obs = this.todoService.getTodoWidgets();
     try {
       const result = await lastValueFrom(obs);
-
-      console.log(`vorher: ${this._latestTodoWidget}`);
 
       if(result.length > 0 && this._latestTodoWidget > 0) {
         this._latestTodoWidget = ++result.length;
@@ -57,11 +83,22 @@ export class TodoAddComponent implements OnInit {
         this._latestTodoWidget = 1;
       }
 
-      console.log(`nachher: ${this._latestTodoWidget}`);
-      console.log(result);
-
     } catch {
     }
   }
 
+  async getTasks(): Promise<void> {
+    const obs = this.todoService.getTasks();
+    try {
+      const result = await lastValueFrom(obs);
+
+      if(result.length > 0 && this._latestTask > 0) {
+        this._latestTask = ++result.length;
+      } else {
+        this._latestTask = 1;
+      }
+
+    } catch {
+    }
+  }
 }

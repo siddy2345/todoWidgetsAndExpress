@@ -1,19 +1,18 @@
-
-/** TodoModel */
+/** TaskModel */
 export interface TaskModel {
-  /** TodoModelId (int) */
+  /** TaskModelId (int) */
   id: number;
   /** Title (string) */
   title: string;
   /** IsDone (boolean) */
   isDone: boolean;
-  /** TodoWidgetsModelId (int) */
+  /** TodoModelId (int) */
   todoId: number;
 }
 
-/** TodoWidgetsModelId */
+/** TodoModel */
 export interface TodoModel {
-  /** TodoWidgetsModelId (int) */
+  /** TodoModelId (int) */
   id: number;
   /** Title (string) */
   title: string;
@@ -23,8 +22,9 @@ export interface TodoModel {
   editedAt: Date;
 }
 
+/** TodoViewModel */
 export interface TodoViewModel {
-  /** TodoWidgetsModelId (int) */
+  /** TodoViewModelId (int) */
   id: number;
   /** Title (string) */
   title: string;
@@ -32,6 +32,6 @@ export interface TodoViewModel {
   createdAt: Date;
   /** EditedAt (Date) */
   editedAt: Date;
-  /** Todos (TaskModel[]) */
+  /** Tasks (TaskModel[]) */
   tasks: TaskModel[] | undefined;
 }

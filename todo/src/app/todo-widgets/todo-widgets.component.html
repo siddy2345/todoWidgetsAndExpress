@@ -2,13 +2,13 @@
   <app-todo-add [isAddWidget]="true" (addWidgetEvent)="getWidgets()"></app-todo-add>
 </div>
 <div class="widgets">
-  <div class="todoWidget" *ngFor="let widget of todoWidgets">
+  <div id="{{widget.id}}" class="todoWidget" *ngFor="let widget of todoWidgets">
     <div class="widgetTitle">
       <h5>{{widget.title}}</h5>
       <button (click)="onDelete(widget)">Delete</button>
     </div>
     <div class="todoAddInWidget">
-      <app-todo-add></app-todo-add>
+      <app-todo-add [isAddWidget]="false" (addTaskEvent)="getTasks()" [todoId]="widget.id"></app-todo-add>
     </div>
     <!-- <div *ngFor="let number of [0,1,2,3,4,5]">
       <app-todo-item class="todoAddWidget"></app-todo-item>
