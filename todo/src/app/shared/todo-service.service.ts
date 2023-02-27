@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TaskModel, TodoModel, TodoViewModel } from './models';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map, Observable, of } from 'rxjs'
+import { forkJoin, map, Observable, of } from 'rxjs'
 import { json } from 'express';
 
 @Injectable({
@@ -30,43 +30,34 @@ export class TodoServiceService {
   // }
 
   getTodoViewModels(): Observable<TodoViewModel[]> {
-    console.log("o");
 
-    const todos = this.http.get<TodoModel[]>(this.api);
-    const tasks = this.http.get<TaskModel[]>(`${this.api}/task`);
+    const todos$ = this.http.get<TodoModel[]>(this.api);
+    const tasks$ = this.http.get<TaskModel[]>(`${this.api}/task`);
 
-    const todoList: TodoModel[] = [];
-    const taskList: TaskModel[] = [];
+    return forkJoin([todos$, tasks$]).pipe(
+      map(([todos, tasks]) => {
+        const todoViewModel: TodoViewModel[] = [];
+        let tvmId = 1;
 
-    todos.subscribe(t => todoList.push(...t));
-    tasks.subscribe(t => taskList.push(...t));
+        todos.forEach(todo => {
+          const tasksPerTodo = tasks.filter(task => task.todoId === todo.id);
+          console.log(tasksPerTodo);
 
-    console.log(todoList);
-    console.log(taskList);
 
-    const todoViewModel: TodoViewModel[] = [];
-    let tvmId: number = 1;
+          const tvm: TodoViewModel = {
+            id: tvmId++,
+            title: todo.title,
+            tasks: tasksPerTodo,
+            createdAt: new Date(),
+            editedAt: new Date()
+          };
 
-    todoList.forEach(todo => {
-      const tasksPerTodo: TaskModel[] = [];
+          todoViewModel.push(tvm);
+        });
 
-      taskList.forEach(task => {
-        if(todo.id === task.id)
-          tasksPerTodo.push(task);
-      });
-
-      const tvm: TodoViewModel = {
-        id: tvmId++,
-        title: todo.title,
-        tasks: taskList,
-        createdAt: new Date(),
-        editedAt: new Date()
-      }
-
-      todoViewModel.push(tvm);
-    });
-
-    return of(todoViewModel);
+        return todoViewModel;
+      })
+    );
   }
 
   // getTodoViewModel(): Observable<TodoViewModel> {
@@ -80,7 +71,7 @@ export class TodoServiceService {
     return res.pipe(map(r => +JSON.parse(JSON.stringify(r)).id)); // get the id from the response json
   }
 
-  postTask(todoWidgetId: number, task: TaskModel): Observable<number> {
+  postTask(task: TaskModel): Observable<number> {
     const res = this.http.post(`${this.api}/task`, {task}, {responseType: 'json'});
 
     return res.pipe(map(r => +JSON.parse(JSON.stringify(r)).id)); // get the id from the response json)

@@ -21,17 +21,13 @@ export class TodoWidgetsComponent implements OnInit {
   }
 
   getWidgets(): void {
-    this.todoService.getTodoViewModels().subscribe(r => console.log(r));
+    this.todoService.getTodoViewModels().subscribe(r => this.todoWidgets = r);
   }
 
   onDelete(widget: TodoViewModel): void {
     this.todoService.deleteTodo(widget.id).pipe(
       finalize(() => this.todoWidgets.splice(this.todoWidgets.indexOf(widget), 1))
     ).subscribe();
-  }
-
-  getTasks(): void {
-
   }
 
 }

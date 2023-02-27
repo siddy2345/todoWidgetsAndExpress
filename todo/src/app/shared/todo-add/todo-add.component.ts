@@ -64,7 +64,7 @@ export class TodoAddComponent implements OnInit {
         todoId: this.todoId
       };
 
-      this.todoService.postTask(0, taskModel).subscribe(newTask =>
+      this.todoService.postTask(taskModel).subscribe(newTask =>
         this.addTaskEvent.emit(newTask)
       );
 
