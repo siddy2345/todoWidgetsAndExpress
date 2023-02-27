@@ -11,7 +11,7 @@
       <app-todo-add [isAddWidget]="false" (addTaskEvent)="getWidgets()" [todoId]="widget.id"></app-todo-add>
     </div>
     <div *ngFor="let task of widget.tasks?.reverse()">
-      <app-todo-item class="todoAddWidget" [taskTitle]="task.title"></app-todo-item>
+      <app-todo-item class="todoAddWidget" [task]="task" (deleteTaskEvent)="getWidgets()"></app-todo-item>
     </div>
 
   </div>

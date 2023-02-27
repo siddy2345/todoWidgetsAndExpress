@@ -1,9 +1,9 @@
 <div class="items">
-  <p>{{taskTitle}}</p>
+  <p #todoTask [id]="task?.id">{{task?.title}}</p>
 
   <div class="buttons">
     <button>Check</button>
-    <button>Delete</button>
+    <button (click)="onDelete(+todoTask.id)">Delete</button>
   </div>
 
 </div>

@@ -76,9 +76,10 @@ export class TodoAddComponent implements OnInit {
     const obs = this.todoService.getTodoWidgets();
     try {
       const result = await lastValueFrom(obs);
+      let newId = result[result.length - 1].id;
 
       if(result.length > 0 && this._latestTodoWidget > 0) {
-        this._latestTodoWidget = ++result.length;
+        this._latestTodoWidget = ++newId;
       } else {
         this._latestTodoWidget = 1;
       }
@@ -91,9 +92,10 @@ export class TodoAddComponent implements OnInit {
     const obs = this.todoService.getTasks();
     try {
       const result = await lastValueFrom(obs);
+      let newId = result[result.length - 1].id;
 
       if(result.length > 0 && this._latestTask > 0) {
-        this._latestTask = ++result.length;
+        this._latestTask = ++newId;
       } else {
         this._latestTask = 1;
       }

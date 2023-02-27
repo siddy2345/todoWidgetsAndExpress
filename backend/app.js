@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import { appendTask, appendTodo, clearTodo, clearTodos, getTasks, getTodos } from '../lib/todo.js';
+import { appendTask, appendTodo, clearTask, clearTasks, clearTodo, clearTodos, getTasks, getTodos } from '../lib/todo.js';
 import path from 'path'
 const app = express();
 
@@ -19,13 +19,11 @@ app.use(express.urlencoded({extended: true}));
  */
 app.get('/todo', async function(req, res) {
   const todos = await getTodos();
-  console.log(todos);
   res.status(200).send(todos);
 });
 
 app.get('/todo/task', async function(req, res) {
   const tasks = await getTasks();
-  console.log(tasks);
   res.status(200).send(tasks);
 });
 
@@ -78,6 +76,18 @@ app.post('/todo/task', async function(req, res) {
 app.delete(`/todo/:id`, async function(req, res) {
   // console.log(req.params.id);
   clearTodo(req.params.id);
+  res.sendStatus(204);
+});
+
+app.delete(`/todo/task/:id`, async function(req, res) {
+  // console.log(req.params.id);
+  clearTask(req.params.id);
+  res.sendStatus(204);
+});
+
+app.delete(`/task/:id`, async function(req, res) {
+  // console.log('req.params.id');
+  clearTasks(req.params.id);
   res.sendStatus(204);
 });
 

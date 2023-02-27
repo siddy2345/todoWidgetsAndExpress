@@ -11,7 +11,6 @@ import { TodoServiceService } from '../shared/todo-service.service';
 export class TodoWidgetsComponent implements OnInit {
 
   @Input() todoWidgets: TodoViewModel[] = [];
-  @Input() todoTasks: TodoViewModel[] = [];
   public previousTodoWidgets: TodoModel[] = [];
 
   constructor(private todoService: TodoServiceService) { }

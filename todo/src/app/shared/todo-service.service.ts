@@ -45,7 +45,7 @@ export class TodoServiceService {
 
 
           const tvm: TodoViewModel = {
-            id: tvmId++,
+            id: todo.id,
             title: todo.title,
             tasks: tasksPerTodo,
             createdAt: new Date(),
@@ -83,10 +83,17 @@ export class TodoServiceService {
 
   deleteTodo(todoWidgetId: number): Observable<void> {
     this.http.delete(`${this.api}/${todoWidgetId}`).subscribe();
+    this.http.delete(`http://localhost:3000/task/${todoWidgetId}`).subscribe();
     return of();
   }
 
-  deleteTask(todoWidgetId: number, todoId: number): Observable<void> {
+  deleteTasks(): Observable<void> {
+    this.http.delete(`${this.api}/task`).subscribe();
+    return of();
+  }
+
+  deleteTask(taskId: number): Observable<void> {
+    this.http.delete(`${this.api}/task/${taskId}`).subscribe();
     return of();
   }
 
