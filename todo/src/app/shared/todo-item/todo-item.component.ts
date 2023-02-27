@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { finalize, tap } from 'rxjs';
-import { TaskModel } from '../models';
+import { TaskModel, TodoViewModel } from '../models';
 import { TodoServiceService } from '../todo-service.service';
 
 @Component({
@@ -12,20 +12,25 @@ export class TodoItemComponent implements OnInit {
 
   @Input() task?: TaskModel;
   @Output() deleteTaskEvent = new EventEmitter<void>();
-
   constructor(private todoService: TodoServiceService) { }
 
   ngOnInit(): void {
   }
 
-  onDelete(task: number): void {
-    this.todoService.deleteTask(task).pipe(
-      finalize(() => {
-        console.log('ok');
+  onDelete(taskId: number | undefined): void {
+    if(taskId)
+      this.todoService.deleteTask(taskId).pipe(
+        finalize(() => {
+          this.deleteTaskEvent.emit();
+        })
+      ).subscribe();
+  }
 
-        this.deleteTaskEvent.emit();
-      })
-    ).subscribe();
+  onCheck(task: TaskModel | undefined): void {
+    if(task)
+      this.todoService.putTask(task, true).pipe(
+        tap (r => console.log(r))
+      ).subscribe();
   }
 
 }

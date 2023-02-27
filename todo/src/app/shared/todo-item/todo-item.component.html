@@ -1,9 +1,17 @@
 <div class="items">
-  <p #todoTask [id]="task?.id">{{task?.title}}</p>
+
+  <div *ngIf="task?.isDone then isDone else isNotDone"></div>
+  <ng-template #isDone>
+    <p #todoTask [id]="task?.id" class="isDone">{{task?.title}}</p>
+  </ng-template>
+  <ng-template #isNotDone>
+    <p #todoTask [id]="task?.id">{{task?.title}}</p>
+  </ng-template>
+
 
   <div class="buttons">
-    <button>Check</button>
-    <button (click)="onDelete(+todoTask.id)">Delete</button>
+    <button (click)="onCheck(task)">Check</button>
+    <button (click)="onDelete(task?.id)">Delete</button>
   </div>
 
 </div>

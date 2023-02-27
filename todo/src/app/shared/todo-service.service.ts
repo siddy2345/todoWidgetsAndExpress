@@ -77,7 +77,12 @@ export class TodoServiceService {
     return res.pipe(map(r => +JSON.parse(JSON.stringify(r)).id)); // get the id from the response json)
   }
 
-  putTask(todoWidgetId: number, todoId: number, todo: TaskModel): Observable<void> {
+  putTask(task: TaskModel, isDone: boolean): Observable<void> {
+    if(isDone)
+      task.isDone = true;
+
+    this.http.put(`${this.api}/task/${task.id}`, task).subscribe();
+
     return of();
   }
 

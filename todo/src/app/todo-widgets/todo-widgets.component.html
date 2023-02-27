@@ -8,10 +8,10 @@
       <button (click)="onDelete(widget)">Delete</button>
     </div>
     <div class="todoAddInWidget">
-      <app-todo-add [isAddWidget]="false" (addTaskEvent)="getWidgets()" [todoId]="widget.id"></app-todo-add>
+      <app-todo-add [isAddWidget]="false" (addTaskEvent)="getTasks()" [todoId]="widget.id"></app-todo-add>
     </div>
-    <div *ngFor="let task of widget.tasks?.reverse()">
-      <app-todo-item class="todoAddWidget" [task]="task" (deleteTaskEvent)="getWidgets()"></app-todo-item>
+    <div *ngFor="let task of tasks">
+      <app-todo-item class="todoAddWidget" [task]="task" (deleteTaskEvent)="getTasks()"></app-todo-item>
     </div>
 
   </div>

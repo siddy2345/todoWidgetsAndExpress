@@ -7,3 +7,7 @@
 p {
   padding-right: 1rem;
 }
+
+.isDone {
+  text-decoration: line-through;
+}
