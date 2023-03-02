@@ -59,7 +59,6 @@ app.post('/todo/task', async function(req, res) {
 
 app.put('/todo/task/:id', async function(req, res) {
   const input = req.body.id;
-  const isDone = req.body.isDone;
   const task = req.body;
   await clearTask(input);
   await appendTask(task);

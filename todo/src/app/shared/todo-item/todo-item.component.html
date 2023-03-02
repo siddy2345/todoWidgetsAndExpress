@@ -2,16 +2,23 @@
 
   <div *ngIf="task?.isDone then isDone else isNotDone"></div>
   <ng-template #isDone>
-    <p #todoTask [id]="task?.id" class="isDone">{{task?.title}}</p>
+    <p class="isDone">{{task?.title}}</p>
+    <div class="buttons">
+      <button [disabled]="inProgess" (click)="onCheck(task)">Uncheck</button>
+      <button [disabled]="inProgess" (click)="onDelete(task?.id)">Delete</button>
+    </div>
   </ng-template>
   <ng-template #isNotDone>
-    <p #todoTask [id]="task?.id">{{task?.title}}</p>
+    <p>{{task?.title}}</p>
+    <div class="buttons">
+      <button [disabled]="inProgess" (click)="onCheck(task)">Check</button>
+      <button [disabled]="inProgess" (click)="onDelete(task?.id)">Delete</button>
+    </div>
   </ng-template>
 
-
-  <div class="buttons">
-    <button [disabled]="inProgess" (click)="onCheck(task)">Check</button>
-    <button [disabled]="inProgess" (click)="onDelete(task?.id)">Delete</button>
-  </div>
+    <!-- <div class="buttons">
+      <button [disabled]="inProgess" (click)="onCheck(task)">Check</button>
+      <button [disabled]="inProgess" (click)="onDelete(task?.id)">Delete</button>
+    </div> -->
 
 </div>

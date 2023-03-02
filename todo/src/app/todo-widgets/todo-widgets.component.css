@@ -4,7 +4,7 @@
   margin-top: 1rem;
   padding: 1rem;
   width: fit-content;
-  background-color: gainsboro;
+  background-color: whitesmoke;
 
   /* align-items: flex-start; */
 }
@@ -12,6 +12,7 @@
 .topLine {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .todoAdd {
@@ -19,7 +20,13 @@
 }
 
 .todoSort {
-  padding-top: 1rem;
+  padding: 1rem 1rem;
+  background-color: whitesmoke;
+  align-self: flex-end;
+}
+
+#sort {
+  margin-left: 1rem;
 }
 
 h5 {
@@ -50,8 +57,9 @@ h5 {
 
   }
 
-  [class="todoAdd"] {
-    display: flex;
+
+  [class="topLine"] {
+    flex-wrap: wrap-reverse;
     justify-content: center;
   }
 }

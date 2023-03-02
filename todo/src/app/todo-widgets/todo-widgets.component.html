@@ -3,7 +3,8 @@
     <app-todo-add [isAddWidget]="true" [inProgress]="isInProgess" (addWidgetEvent)="getWidgets()"></app-todo-add>
   </div>
   <div class="todoSort">
-    <select #selection (change)="onSortTodo(selection.value)">
+    <label for="sort">To-Do Listen sortieren nach:</label>
+    <select id="sort" #selection (change)="onSortTodo(selection.value)">
       <option value="nothing" selected>Sortieren nach...</option>
       <option value="newest">Neuste zuerst</option>
       <option value="oldest">Älteste zuerst</option>

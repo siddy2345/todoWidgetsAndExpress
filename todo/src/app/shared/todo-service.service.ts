@@ -75,8 +75,11 @@ export class TodoServiceService {
   }
 
   putTask(task: TaskModel, isDone: boolean): Observable<void> {
-    if(isDone)
+    if(isDone) {
       task.isDone = true;
+    } else {
+      task.isDone = false;
+    }
 
     this.http.put(`${this.api}/task/${task.id}`, task).subscribe();
 

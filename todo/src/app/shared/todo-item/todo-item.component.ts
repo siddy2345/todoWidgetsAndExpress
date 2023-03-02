@@ -27,7 +27,15 @@ export class TodoItemComponent implements OnInit {
   }
 
   onCheck(task: TaskModel | undefined): void {
-    if(task) this.todoService.putTask(task, true).subscribe();
+    this.inProgess = true;
+
+    if(task?.isDone) {
+      this.todoService.putTask(task, false).pipe(finalize(() => this.inProgess = false)).subscribe();
+    } else if (task?.isDone === false) {
+      this.todoService.putTask(task, true).pipe(finalize(() => this.inProgess = false)).subscribe();
+    }
+
+    // this.inProgess = false;
   }
 
 }
