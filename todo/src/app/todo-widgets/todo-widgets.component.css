@@ -9,7 +9,16 @@
   /* align-items: flex-start; */
 }
 
+.topLine {
+  display: flex;
+  justify-content: space-between;
+}
+
 .todoAdd {
+  padding-top: 1rem;
+}
+
+.todoSort {
   padding-top: 1rem;
 }
 

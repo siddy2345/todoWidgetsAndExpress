@@ -11,6 +11,7 @@ import { TodoServiceService } from '../todo-service.service';
 export class TodoItemComponent implements OnInit {
 
   @Input() task?: TaskModel;
+  @Input() inProgess: boolean = false;
   @Output() deleteTaskEvent = new EventEmitter<void>();
   constructor(private todoService: TodoServiceService) { }
 

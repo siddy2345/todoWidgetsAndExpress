@@ -10,8 +10,8 @@
 
 
   <div class="buttons">
-    <button (click)="onCheck(task)">Check</button>
-    <button (click)="onDelete(task?.id)">Delete</button>
+    <button [disabled]="inProgess" (click)="onCheck(task)">Check</button>
+    <button [disabled]="inProgess" (click)="onDelete(task?.id)">Delete</button>
   </div>
 
 </div>

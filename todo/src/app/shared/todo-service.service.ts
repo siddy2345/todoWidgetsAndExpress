@@ -37,7 +37,6 @@ export class TodoServiceService {
     return forkJoin([todos$, tasks$]).pipe(
       map(([todos, tasks]) => {
         const todoViewModel: TodoViewModel[] = [];
-        let tvmId = 1;
 
         todos.forEach(todo => {
           const tasksPerTodo = tasks.filter(task => task.todoId === todo.id);
@@ -46,8 +45,8 @@ export class TodoServiceService {
             id: todo.id,
             title: todo.title,
             tasks: tasksPerTodo,
-            createdAt: new Date(),
-            editedAt: new Date()
+            createdAt: todo.createdAt,
+            editedAt: todo.editedAt
           };
 
           todoViewModel.push(tvm);

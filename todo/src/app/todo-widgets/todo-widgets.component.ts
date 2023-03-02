@@ -32,8 +32,12 @@ export class TodoWidgetsComponent implements OnInit {
   }
 
   onDelete(widget: TodoViewModel): void {
+    this.isInProgess = true;
     this.todoService.deleteTodo(widget.id).pipe(
-      finalize(() => this.todoViewModel.splice(this.todoViewModel.indexOf(widget), 1))
+      finalize(() => {
+        this.todoViewModel.splice(this.todoViewModel.indexOf(widget), 1);
+        this.isInProgess = false;
+      })
       ).subscribe();
   }
 
@@ -44,5 +48,13 @@ export class TodoWidgetsComponent implements OnInit {
 
     onlyNotDoneTasks.sort((a, b) => b.id - a.id); //sorts in reversed order before combining with tasks which are done
     return onlyNotDoneTasks.concat(onlyDoneTasks);
+  }
+
+  onSortTodo(sortValue: string): void {
+    if (sortValue === 'oldest') {
+      this.todoViewModel.sort((a, b) => new Date(b.editedAt).getTime() - new Date(a.editedAt).getTime());
+    } else {
+      this.todoViewModel.sort((a, b) => new Date(a.editedAt).getTime() - new Date(b.editedAt).getTime());
+    }
   }
 }

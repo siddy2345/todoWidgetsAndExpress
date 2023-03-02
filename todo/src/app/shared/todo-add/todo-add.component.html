@@ -2,13 +2,31 @@
   <form>
     <div *ngIf="isAddWidget then buttonAddWidget; else buttonAddTodoToWidget"></div>
     <ng-template #buttonAddWidget>
-      <input [disabled]="inProgress" #titleTodo type="text" (keydown.enter)="addWidget(titleTodo, $event)">
-      <button [disabled]="inProgress" type="button" name="buttonAddWidget" (click)="addWidget(titleTodo, $event)">+ Erstellen</button>
+      <input
+        placeholder="Titel für Todo"
+        [disabled]="inProgress"
+        #titleTodo
+        type="text"
+        (keydown.enter)="addWidget(titleTodo, $event)"
+      >
+      <button
+        [disabled]="inProgress"
+        type="button"
+        name="buttonAddWidget"
+        (click)="addWidget(titleTodo, $event)"
+        >+ Erstellen</button>
     </ng-template>
     <ng-template class="addInWidget" #buttonAddTodoToWidget>
-      <input [disabled]="inProgress" #titleTask type="text" (keydown.enter)="addTask(titleTask, $event)">
-      <button [disabled]="inProgress" type="button" name="buttonAddTodoToWidget" (click)="addTask(titleTask, $event)">+</button>
+      <input
+        placeholder="Titel für Task"
+        [disabled]="inProgress"
+        #titleTask type="text"
+        (keydown.enter)="addTask(titleTask, $event)"
+      ><button
+        [disabled]="inProgress"
+        type="button"
+        name="buttonAddTodoToWidget" (click)="addTask(titleTask, $event)"
+      >+</button>
     </ng-template>
   </form>
-
 </div>
