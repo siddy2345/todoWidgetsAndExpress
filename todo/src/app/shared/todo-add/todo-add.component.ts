@@ -12,6 +12,7 @@ export class TodoAddComponent implements OnInit {
 
   @Input() isAddWidget?: boolean;
   @Input() todoId?: number;
+  @Input() inProgress: boolean = false;
   @Output() addWidgetEvent = new EventEmitter<number>();
   @Output() addTaskEvent = new EventEmitter<number>();
 
@@ -28,10 +29,6 @@ export class TodoAddComponent implements OnInit {
     event.preventDefault();
 
     await this.getTodoWidgets();
-
-    // console.log(this._latestTodoWidget);
-
-    console.log(this._latestTodoWidget);
 
     let todoModel: TodoModel = {
       id: this._latestTodoWidget,
@@ -51,8 +48,6 @@ export class TodoAddComponent implements OnInit {
     event.preventDefault();
 
     await this.getTasks();
-
-    // console.log(this.widgetId);
 
     let taskModel: TaskModel;
 

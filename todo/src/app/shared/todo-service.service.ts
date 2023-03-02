@@ -41,8 +41,6 @@ export class TodoServiceService {
 
         todos.forEach(todo => {
           const tasksPerTodo = tasks.filter(task => task.todoId === todo.id);
-          console.log(tasksPerTodo);
-
 
           const tvm: TodoViewModel = {
             id: todo.id,

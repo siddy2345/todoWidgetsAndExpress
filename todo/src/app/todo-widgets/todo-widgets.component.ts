@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { delay, finalize, map, tap } from 'rxjs';
+import { delay, finalize, map, pipe, tap } from 'rxjs';
 import { TaskModel, TodoModel, TodoViewModel } from '../shared/models';
 import { TodoServiceService } from '../shared/todo-service.service';
 
@@ -10,29 +10,39 @@ import { TodoServiceService } from '../shared/todo-service.service';
 })
 export class TodoWidgetsComponent implements OnInit {
 
-  @Input() todoWidgets: TodoViewModel[] = [];
+  @Input() todoViewModel: TodoViewModel[] = [];
   @Input() tasks: TaskModel[] = [];
-  public previousTodoWidgets: TodoModel[] = [];
+
+  public isInProgess: boolean = false;
 
   constructor(private todoService: TodoServiceService) { }
 
   ngOnInit(): void {
     this.getWidgets();
-    this.getTasks();
   }
 
+
   getWidgets(): void {
-    this.todoService.getTodoViewModels().subscribe(tvm => this.todoWidgets = tvm);
+    this.isInProgess = true;
+    this.todoService.getTodoViewModels().pipe(finalize(() => this.isInProgess = false)).subscribe(tvm => {this.todoViewModel = tvm; this.getTasks()});
   }
 
   getTasks(): void {
-    this.todoService.getTasks().subscribe(t => this.tasks = t.sort((a, b) => b.id - a.id && +a.isDone - +b.isDone));
+    this.todoService.getTasks().subscribe(t => this.tasks = t);
   }
 
   onDelete(widget: TodoViewModel): void {
     this.todoService.deleteTodo(widget.id).pipe(
-      finalize(() => this.todoWidgets.splice(this.todoWidgets.indexOf(widget), 1))
-    ).subscribe();
+      finalize(() => this.todoViewModel.splice(this.todoViewModel.indexOf(widget), 1))
+      ).subscribe();
   }
 
+  filteredTasks(widgetId: number): TaskModel[] {
+    const tasksPerWidget = this.tasks.filter(t => t.todoId === widgetId);
+    const onlyDoneTasks = tasksPerWidget.filter(t => t.isDone === true);
+    const onlyNotDoneTasks = tasksPerWidget.filter(t => t.isDone === false).reverse();
+
+    onlyNotDoneTasks.sort((a, b) => b.id - a.id); //sorts in reversed order before combining with tasks which are done
+    return onlyNotDoneTasks.concat(onlyDoneTasks);
+  }
 }

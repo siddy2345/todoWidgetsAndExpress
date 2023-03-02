@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { finalize, tap } from 'rxjs';
+import { delay, finalize, map, tap } from 'rxjs';
 import { TaskModel, TodoViewModel } from '../models';
 import { TodoServiceService } from '../todo-service.service';
 
@@ -18,19 +18,15 @@ export class TodoItemComponent implements OnInit {
   }
 
   onDelete(taskId: number | undefined): void {
-    if(taskId)
+    if (taskId) {
       this.todoService.deleteTask(taskId).pipe(
-        finalize(() => {
-          this.deleteTaskEvent.emit();
-        })
+        finalize(() => {this.deleteTaskEvent.emit();})
       ).subscribe();
+    }
   }
 
   onCheck(task: TaskModel | undefined): void {
-    if(task)
-      this.todoService.putTask(task, true).pipe(
-        tap (r => console.log(r))
-      ).subscribe();
+    if(task) this.todoService.putTask(task, true).subscribe();
   }
 
 }
