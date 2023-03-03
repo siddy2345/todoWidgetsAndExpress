@@ -27,6 +27,9 @@
 
 #sort {
   margin-left: 1rem;
+  height: 1.5rem;
+  border: 2px solid #e8e8e8;
+  outline: none;
 }
 
 h5 {
@@ -34,13 +37,15 @@ h5 {
   display: inline;
   padding-right: 1rem;
   margin: 0;
+  font-size: 1rem;
 }
 
 .widgets {
   display: grid;
-  grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
 }
+
 
 .widgetTitle {
   display: flex;

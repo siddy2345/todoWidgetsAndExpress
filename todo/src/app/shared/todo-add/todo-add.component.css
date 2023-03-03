@@ -1,15 +1,44 @@
 
-.addTodoWidget > form {
+form {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.addTodo {
   padding: 1rem 1rem;
   background-color: whitesmoke;
 }
 
-.addTodoWidget {
-  width: fit-content;
+.addTask {
+  padding: 1rem 0 1rem 0;
+}
+
+input {
+  border: 2px solid #e8e8e8;
+  margin-right: 0.5rem;
+  border-radius: 0;
+  outline-color: #979797;
+  outline: none;
+}
+
+input:focus {
+  box-shadow: 0 0 0 1pt #979797;
+  transition: .1s;
+}
+
+.plusTodo, .plusTask {
+  font-size: 1.3rem;
+}
+
+.plusTodo {
+  margin-right: 0.2rem;
+}
+
+button {
+  display: flex;
+  align-items: center;
 }
 
 
-/* .addInWidget {
-  display: inline;
-} */
 

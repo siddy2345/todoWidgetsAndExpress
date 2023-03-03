@@ -57,4 +57,8 @@ export class TodoWidgetsComponent implements OnInit {
       this.todoViewModel.sort((a, b) => new Date(a.editedAt).getTime() - new Date(b.editedAt).getTime());
     }
   }
+
+  changeInProgress(value: boolean): void {
+    this.isInProgess = value;
+  }
 }

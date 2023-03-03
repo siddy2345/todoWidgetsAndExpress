@@ -1,32 +1,78 @@
-<div class="addTodoWidget">
+<!-- <div class="addTodoWidget">
   <form>
-    <div *ngIf="isAddWidget then buttonAddWidget; else buttonAddTodoToWidget"></div>
-    <ng-template #buttonAddWidget>
+
+    <ng-template class="addTodo" #buttonAddWidget>
       <input
         placeholder="Titel für Todo"
         [disabled]="inProgress"
         #titleTodo
         type="text"
         (keydown.enter)="addWidget(titleTodo, $event)"
+        maxlength="15"
       >
       <button
         [disabled]="inProgress"
         type="button"
         name="buttonAddWidget"
         (click)="addWidget(titleTodo, $event)"
-        >+ Erstellen</button>
+        ><span class="plusTodo">+</span> Erstellen</button>
     </ng-template>
-    <ng-template class="addInWidget" #buttonAddTodoToWidget>
+    <ng-template class="addTask" #buttonAddTodoToWidget>
       <input
         placeholder="Titel für Task"
         [disabled]="inProgress"
         #titleTask type="text"
         (keydown.enter)="addTask(titleTask, $event)"
+        maxlength="20"
       ><button
         [disabled]="inProgress"
         type="button"
         name="buttonAddTodoToWidget" (click)="addTask(titleTask, $event)"
-      >+</button>
+      ><span class="plusTask">+</span></button>
     </ng-template>
   </form>
-</div>
+</div> -->
+
+
+
+<div *ngIf="isAddWidget then buttonAddTodo; else buttonAddTask"></div>
+<ng-template #buttonAddTodo>
+  <div class="addTodo">
+    <form>
+      <input
+        placeholder="Titel für Todo"
+        [disabled]="inProgress"
+        #titleTodo
+        type="text"
+        (keydown.enter)="addWidget(titleTodo, $event)"
+        maxlength="15"
+      >
+      <button
+        [disabled]="inProgress"
+        type="button"
+        name="buttonAddWidget"
+        (click)="addWidget(titleTodo, $event)"
+      ><span class="plusTodo">+</span> Erstellen</button>
+    </form>
+  </div>
+</ng-template>
+
+<ng-template #buttonAddTask>
+  <div class="addTask">
+    <form>
+      <input
+        placeholder="Titel für Task"
+        [disabled]="inProgress"
+        #titleTask type="text"
+        (keydown.enter)="addTask(titleTask, $event)"
+        maxlength="20"
+      >
+      <button
+        [disabled]="inProgress"
+        type="button"
+        name="buttonAddTodoToWidget" (click)="addTask(titleTask, $event)"
+      ><span class="plusTask">+</span></button>
+    </form>
+  </div>
+</ng-template>
+

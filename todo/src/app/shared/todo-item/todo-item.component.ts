@@ -13,6 +13,7 @@ export class TodoItemComponent implements OnInit {
   @Input() task?: TaskModel;
   @Input() inProgess: boolean = false;
   @Output() deleteTaskEvent = new EventEmitter<void>();
+  @Output() inProgessEvent = new EventEmitter<boolean>();
   constructor(private todoService: TodoServiceService) { }
 
   ngOnInit(): void {
@@ -20,8 +21,13 @@ export class TodoItemComponent implements OnInit {
 
   onDelete(taskId: number | undefined): void {
     if (taskId) {
+      this.inProgessEvent.emit(true);
+
       this.todoService.deleteTask(taskId).pipe(
-        finalize(() => {this.deleteTaskEvent.emit();})
+        finalize(() => {
+          this.deleteTaskEvent.emit();
+          this.inProgessEvent.emit(false);
+        })
       ).subscribe();
     }
   }
@@ -29,10 +35,20 @@ export class TodoItemComponent implements OnInit {
   onCheck(task: TaskModel | undefined): void {
     this.inProgess = true;
 
+    this.inProgessEvent.emit(true);
+
     if(task?.isDone) {
-      this.todoService.putTask(task, false).pipe(finalize(() => this.inProgess = false)).subscribe();
+      this.todoService.putTask(task, false).pipe(finalize(() => {
+        this.inProgess = false;
+        this.inProgessEvent.emit(false);
+      })).subscribe();
+
     } else if (task?.isDone === false) {
-      this.todoService.putTask(task, true).pipe(finalize(() => this.inProgess = false)).subscribe();
+      this.todoService.putTask(task, true).pipe(finalize(() => {
+        this.inProgess = false;
+        this.inProgessEvent.emit(false);
+      })).subscribe();
+
     }
 
     // this.inProgess = false;

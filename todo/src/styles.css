@@ -1,9 +1,31 @@
 /* You can add global styles to this file, and also import other style files */
 body {
-  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-family: 'Roboto', sans-serif;
+}
+/*
+*{
+  box-sizing: border-box;
+} */
+
+button {
+  color: #fff;
+  border: 2px solid #e81e75;
+  border-radius: 0;
+  background-color: #e81e75;
+  cursor: pointer;
+  padding: 0.3rem 0.6rem;
+  transition: 0.5s;
 }
 
+button:hover {
+  color: #e81e75;
+  background-color: #fff;
+  transition: 0.2s ease-in-out;
+}
 
+input {
+  padding: 0.6rem;
+}
 
 /* button {
   padding: 0.6em 2em;
