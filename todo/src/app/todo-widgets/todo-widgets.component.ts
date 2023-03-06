@@ -21,7 +21,6 @@ export class TodoWidgetsComponent implements OnInit {
     this.getWidgets();
   }
 
-
   getWidgets(): void {
     this.isInProgess = true;
     this.todoService.getTodoViewModels().pipe(finalize(() => this.isInProgess = false)).subscribe(tvm => {this.todoViewModel = tvm; this.getTasks()});
@@ -58,7 +57,7 @@ export class TodoWidgetsComponent implements OnInit {
     }
   }
 
-  changeInProgress(value: boolean): void {
+  changeProgressStatus(value: boolean): void {
     this.isInProgess = value;
   }
 }

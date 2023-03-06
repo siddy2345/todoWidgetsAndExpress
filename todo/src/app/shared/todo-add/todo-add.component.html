@@ -1,40 +1,3 @@
-<!-- <div class="addTodoWidget">
-  <form>
-
-    <ng-template class="addTodo" #buttonAddWidget>
-      <input
-        placeholder="Titel für Todo"
-        [disabled]="inProgress"
-        #titleTodo
-        type="text"
-        (keydown.enter)="addWidget(titleTodo, $event)"
-        maxlength="15"
-      >
-      <button
-        [disabled]="inProgress"
-        type="button"
-        name="buttonAddWidget"
-        (click)="addWidget(titleTodo, $event)"
-        ><span class="plusTodo">+</span> Erstellen</button>
-    </ng-template>
-    <ng-template class="addTask" #buttonAddTodoToWidget>
-      <input
-        placeholder="Titel für Task"
-        [disabled]="inProgress"
-        #titleTask type="text"
-        (keydown.enter)="addTask(titleTask, $event)"
-        maxlength="20"
-      ><button
-        [disabled]="inProgress"
-        type="button"
-        name="buttonAddTodoToWidget" (click)="addTask(titleTask, $event)"
-      ><span class="plusTask">+</span></button>
-    </ng-template>
-  </form>
-</div> -->
-
-
-
 <div *ngIf="isAddWidget then buttonAddTodo; else buttonAddTask"></div>
 <ng-template #buttonAddTodo>
   <div class="addTodo">
@@ -44,14 +7,14 @@
         [disabled]="inProgress"
         #titleTodo
         type="text"
-        (keydown.enter)="addWidget(titleTodo, $event)"
+        (keydown.enter)="addTodo(titleTodo, $event)"
         maxlength="15"
       >
       <button
         [disabled]="inProgress"
         type="button"
         name="buttonAddWidget"
-        (click)="addWidget(titleTodo, $event)"
+        (click)="addTodo(titleTodo, $event)"
       ><span class="plusTodo">+</span> Erstellen</button>
     </form>
   </div>

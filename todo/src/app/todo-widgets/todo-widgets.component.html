@@ -1,13 +1,24 @@
 <div class="topLine">
   <div class="todoAdd">
-    <app-todo-add [isAddWidget]="true" [inProgress]="isInProgess" (addWidgetEvent)="getWidgets()"></app-todo-add>
+    <app-todo-add
+      [isAddWidget]="true"
+      [inProgress]="isInProgess"
+      (addWidgetEvent)="getWidgets()">
+    </app-todo-add>
   </div>
   <div class="todoSort">
     <label for="sort">To-Do Liste sortieren nach:</label>
     <select id="sort" #selection (change)="onSortTodo(selection.value)">
-      <option value="nothing" selected>Sortieren nach...</option>
-      <option value="newest">Neuste zuerst</option>
-      <option value="oldest">Älteste zuerst</option>
+      <option
+        value="nothing"
+        selected
+      >Sortieren nach...</option>
+      <option
+        value="newest"
+      >Neuste zuerst</option>
+      <option
+        value="oldest"
+      >Älteste zuerst</option>
     </select>
   </div>
 
@@ -16,13 +27,27 @@
   <div id="{{widget.id}}" class="todoWidget" *ngFor="let widget of todoViewModel">
     <div class="widgetTitle">
       <h5>{{widget.title}}</h5>
-      <button [disabled]="isInProgess" (click)="onDelete(widget)">Delete</button>
+      <button
+        [disabled]="isInProgess"
+        (click)="onDelete(widget)"
+      >Delete</button>
     </div>
     <div class="todoAddInWidget">
-      <app-todo-add [inProgress]="isInProgess" [isAddWidget]="false" (addTaskEvent)="getWidgets()" [todoId]="widget.id"></app-todo-add>
+      <app-todo-add
+        [inProgress]="isInProgess"
+        [isAddWidget]="false"
+        (addTaskEvent)="getWidgets()"
+        [todoId]="widget.id">
+      </app-todo-add>
     </div>
     <div *ngFor="let task of filteredTasks(widget.id)"> <!-- gets tasks per widget -->
-      <app-todo-item [inProgess]="isInProgess" (inProgessEvent)="changeInProgress($event)" class="todoAddWidget" [task]="task" (deleteTaskEvent)="getWidgets()"></app-todo-item>
+      <app-todo-item
+        [inProgess]="isInProgess"
+        (inProgessEvent)="changeProgressStatus($event)"
+        class="todoAddWidget"
+        [task]="task"
+        (deleteTaskEvent)="getWidgets()">
+      </app-todo-item>
     </div>
   </div>
 </div>

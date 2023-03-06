@@ -25,10 +25,6 @@ export class TodoServiceService {
     return res;
   }
 
-  // getTodoWidget(id: number): Observable<TodoModel> {
-  //   return of();
-  // }
-
   getTodoViewModels(): Observable<TodoViewModel[]> {
 
     const todos$ = this.http.get<TodoModel[]>(this.api);
@@ -56,10 +52,6 @@ export class TodoServiceService {
       })
     );
   }
-
-  // getTodoViewModel(): Observable<TodoViewModel> {
-  //   return of();
-  // }
 
   postTodo(todoWidget: TodoModel): Observable<number> {
     // localStorage.setItem(todoWidget.id.toString(), JSON.stringify(todoWidget));

@@ -24,7 +24,7 @@ export class TodoAddComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public async addWidget(input: HTMLInputElement, event: Event) {
+  public async addTodo(input: HTMLInputElement, event: Event) {
     // const keys = Object.keys(localStorage);
     event.preventDefault();
 
