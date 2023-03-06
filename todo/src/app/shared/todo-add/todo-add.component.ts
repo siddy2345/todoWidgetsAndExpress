@@ -68,7 +68,7 @@ export class TodoAddComponent implements OnInit {
   }
 
   async getTodoWidgets(): Promise<void> {
-    const obs = this.todoService.getTodoWidgets();
+    const obs = this.todoService.getTodo();
     try {
       const result = await lastValueFrom(obs);
       let newId = result[result.length - 1].id;

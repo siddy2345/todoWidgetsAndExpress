@@ -58,11 +58,11 @@ app.post('/todo/task', async function(req, res) {
 });
 
 app.put('/todo/task/:id', async function(req, res) {
-  const input = req.body.id;
-  const task = req.body;
-  await clearTask(input);
-  await appendTask(task);
-  res.status(201).send(task);
+  const taskId = req.body.id;
+  const taskBody = req.body;
+  await clearTask(taskId);
+  await appendTask(taskBody);
+  res.status(201).send(taskBody);
 });
 
 /**
@@ -93,7 +93,7 @@ app.delete(`/todo/task/:id`, async function(req, res) {
   res.sendStatus(204);
 });
 
-app.delete(`/task/:id`, async function(req, res) {
+app.delete(`/todo/tasks/:id`, async function(req, res) {
   // console.log('req.params.id');
   clearTasks(req.params.id);
   res.sendStatus(204);

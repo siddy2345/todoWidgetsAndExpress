@@ -13,7 +13,7 @@ export class TodoServiceService {
 
   constructor(private http: HttpClient) { }
 
-  getTodoWidgets(): Observable<TodoModel[]> {
+  getTodo(): Observable<TodoModel[]> {
     const res = this.http.get<TodoModel[]>(this.api);
 
     return res;
@@ -88,12 +88,12 @@ export class TodoServiceService {
 
   deleteTodo(todoWidgetId: number): Observable<void> {
     this.http.delete(`${this.api}/${todoWidgetId}`).subscribe();
-    this.http.delete(`http://localhost:3000/task/${todoWidgetId}`).subscribe();
+    this.deleteTasks(todoWidgetId);
     return of();
   }
 
-  deleteTasks(): Observable<void> {
-    this.http.delete(`${this.api}/task`).subscribe();
+  deleteTasks(todoWidgetId: number): Observable<void> {
+    this.http.delete(`${this.api}/tasks/${todoWidgetId}`).subscribe();
     return of();
   }
 
