@@ -28,42 +28,50 @@ export class TodoAddComponent implements OnInit {
     // const keys = Object.keys(localStorage);
     event.preventDefault();
 
-    await this.getTodoWidgets();
+    if(input.value.trim() !== '') {
 
-    let todoModel: TodoModel = {
-      id: this._latestTodoWidget,
-      title: input.value,
-      createdAt: new Date(),
-      editedAt: new Date()
-    };
+      await this.getTodoWidgets();
 
-    this.todoService.postTodo(todoModel).subscribe(newTodoWidget =>
-      this.addWidgetEvent.emit(newTodoWidget)
-    );
+      let todoModel: TodoModel = {
+        id: this._latestTodoWidget,
+        title: input.value,
+        createdAt: new Date(),
+        editedAt: new Date()
+      };
 
-    input.value = '';
+      this.todoService.postTodo(todoModel).subscribe(newTodoWidget =>
+        this.addWidgetEvent.emit(newTodoWidget)
+      );
+
+      input.value = '';
+    }
+
   }
 
   public async addTask(input: HTMLInputElement, event: Event) {
     event.preventDefault();
 
-    await this.getTasks();
+    if(input.value.trim() !== '') {
 
-    let taskModel: TaskModel;
+      await this.getTasks();
 
-    if(this.todoId) {
-      taskModel = {
-        id: this._latestTask,
-        title: input.value,
-        isDone: false,
-        todoId: this.todoId
-      };
+      let taskModel: TaskModel;
 
-      this.todoService.postTask(taskModel).subscribe(newTask =>
-        this.addTaskEvent.emit(newTask)
-      );
+      if(this.todoId) {
+        taskModel = {
+          id: this._latestTask,
+          title: input.value,
+          isDone: false,
+          todoId: this.todoId
+        };
 
-      input.value = '';
+        this.todoService.postTask(taskModel).subscribe(newTask =>
+          this.addTaskEvent.emit(newTask)
+        );
+
+        input.value = '';
+      }
+
     }
   }
 
