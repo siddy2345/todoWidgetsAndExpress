@@ -1,4 +1,4 @@
-<div *ngIf="isAddWidget then buttonAddTodo; else buttonAddTask"></div>
+<ng-container *ngIf="isAddWidget then buttonAddTodo; else buttonAddTask"></ng-container>
 <ng-template #buttonAddTodo>
   <div class="addTodo">
     <form>
