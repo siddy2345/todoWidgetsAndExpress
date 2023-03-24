@@ -53,6 +53,18 @@ h5 {
   padding-bottom: 1rem;
 }
 
+.widgetDiv {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebar {
+  background-color: aqua;
+  /* z-index: 1; */
+  position: fixed;
+  right: 1rem;
+}
+
 @media only screen and (max-width: 767px) {
   /* mobile phones */
   [class*="widgets"] {

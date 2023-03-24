@@ -5,13 +5,15 @@ import { TodoWidgetsRoutingModule } from './todo-widgets-routing.module';
 import { TodoWidgetsComponent } from './todo-widgets.component';
 import { TodoAddComponent } from '../shared/todo-add/todo-add.component';
 import { TodoItemComponent } from '../shared/todo-item/todo-item.component';
+import { SidebarComponent } from '../sidebar/sidebar.component';
 
 
 @NgModule({
   declarations: [
     TodoWidgetsComponent,
     TodoAddComponent,
-    TodoItemComponent
+    TodoItemComponent,
+    SidebarComponent
   ],
   imports: [
     CommonModule,
