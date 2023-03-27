@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { delay, finalize, map, pipe, tap } from 'rxjs';
 import { TaskModel, TodoModel, TodoViewModel } from '../shared/models';
 import { TodoServiceService } from '../shared/todo-service.service';
+import { TodoStoreService } from '../todo-store.service';
 
 @Component({
   selector: 'app-todo-widgets',
@@ -14,8 +15,10 @@ export class TodoWidgetsComponent implements OnInit {
   @Input() tasks: TaskModel[] = [];
 
   public isInProgess: boolean = false;
+  public isTodoSelected: boolean = false;
+  public closeSidebar: boolean = true; //true if sidebar should get closed
 
-  constructor(private todoService: TodoServiceService) { }
+  constructor(private todoService: TodoServiceService, private todoStore: TodoStoreService) { }
 
   ngOnInit(): void {
     this.getWidgets();
@@ -38,6 +41,8 @@ export class TodoWidgetsComponent implements OnInit {
         this.isInProgess = false;
       })
       ).subscribe();
+
+    this.setCloseSidebar(true);
   }
 
   filteredTasks(widgetId: number): TaskModel[] {
@@ -59,5 +64,14 @@ export class TodoWidgetsComponent implements OnInit {
 
   changeProgressStatus(value: boolean): void {
     this.isInProgess = value;
+  }
+
+  selectTodo(todo: TodoViewModel): void {
+    this.todoStore.updateSelectedTodos(todo);
+    this.setCloseSidebar(false);
+  }
+
+  setCloseSidebar(value: boolean) {
+    this.closeSidebar = value;
   }
 }

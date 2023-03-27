@@ -59,10 +59,16 @@ h5 {
 }
 
 .sidebar {
-  background-color: aqua;
+  background-color: whitesmoke;
   /* z-index: 1; */
   position: fixed;
-  right: 1rem;
+  right: 0.5rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.disabled {
+  opacity: 0.5;
 }
 
 @media only screen and (max-width: 767px) {
