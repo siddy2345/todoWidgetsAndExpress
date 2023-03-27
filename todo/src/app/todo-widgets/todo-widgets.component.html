@@ -3,7 +3,7 @@
     <div class="todoAdd">
       <app-todo-add
         [isAddWidget]="true"
-        [inProgress]="isInProgess"
+        [inProgress]="isInProgress"
         (addWidgetEvent)="getWidgets()">
       </app-todo-add>
     </div>
@@ -25,24 +25,29 @@
   </div>
 
   <ng-template [ngIf]="!closeSidebar">
-    <div class="sidebar">
-      <app-sidebar (closeSidebar)="setCloseSidebar($event)"></app-sidebar>
+    <div (clickOutside)="onClickOutside()" class="sidebar">
+      <app-sidebar (closeSidebarEvent)="setCloseSidebar($event); counter = counter + 1"></app-sidebar>
     </div>
   </ng-template>
 
 
   <div class="widgets">
-    <div (click)="selectTodo(widget)" id="{{widget.id}}" class="todoWidget" *ngFor="let widget of todoViewModel">
-      <div class="widgetTitle">
-        <h5>{{widget.title}}</h5>
-        <button
-          [disabled]="isInProgess"
-          (click)="onDelete(widget)"
-        >Delete</button>
+    <div id="{{widget.id}}" class="todoWidget" *ngFor="let widget of todoViewModel">
+      <div class="headline">
+        <div class="detail">
+          <button type="button" (click)="onClickTodo(widget)">Details</button>
+        </div>
+        <div class="widgetTitle">
+          <h5>{{widget.title}}</h5>
+          <button
+            [disabled]="isInProgress"
+            (click)="onDelete(widget)"
+          >Delete</button>
+        </div>
       </div>
       <div class="todoAddInWidget">
         <app-todo-add
-          [inProgress]="isInProgess"
+          [inProgress]="isInProgress"
           [isAddWidget]="false"
           (addTaskEvent)="getWidgets()"
           [todoId]="widget.id">
@@ -50,7 +55,7 @@
       </div>
       <div *ngFor="let task of filteredTasks(widget.id)"> <!-- gets tasks per widget -->
         <app-todo-item
-          [inProgess]="isInProgess"
+          [inProgess]="isInProgress"
           (inProgessEvent)="changeProgressStatus($event)"
           class="todoAddWidget"
           [task]="task"

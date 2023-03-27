@@ -1,6 +1,4 @@
-import { ChangeDetectorRef, Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { last, lastValueFrom, map, switchMap, takeLast } from 'rxjs';
-import { TodoViewModel } from '../shared/models';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { TodoStoreService } from '../todo-store.service';
 
 @Component({
@@ -10,17 +8,14 @@ import { TodoStoreService } from '../todo-store.service';
 })
 export class SidebarComponent implements OnInit {
 
-  @Output() closeSidebar = new EventEmitter<boolean>();
-
-  public selectedTodo: TodoViewModel | undefined;
+  @Output() closeSidebarEvent = new EventEmitter<boolean>();
 
   constructor(public todoStore: TodoStoreService) { }
 
   ngOnInit(): void {
-    this.todoStore.todos$.pipe(map(t => this.selectedTodo = t[t.length - 1])).subscribe();
   }
 
   onClose(): void {
-    this.closeSidebar.emit(true);
+    this.closeSidebarEvent.emit(true);
   }
 }

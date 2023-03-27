@@ -6,6 +6,7 @@ import { TodoWidgetsComponent } from './todo-widgets.component';
 import { TodoAddComponent } from '../shared/todo-add/todo-add.component';
 import { TodoItemComponent } from '../shared/todo-item/todo-item.component';
 import { SidebarComponent } from '../sidebar/sidebar.component';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SidebarComponent } from '../sidebar/sidebar.component';
   imports: [
     CommonModule,
     TodoWidgetsRoutingModule,
+    ClickOutsideModule
   ]
 })
 export class TodoWidgetsModule { }

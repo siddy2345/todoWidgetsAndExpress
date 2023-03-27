@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { lastValueFrom, tap } from 'rxjs';
 import { TaskModel, TodoModel } from '../models';
 import { TodoServiceService } from '../todo-service.service';
@@ -16,7 +16,7 @@ export class TodoAddComponent implements OnInit {
   @Output() addWidgetEvent = new EventEmitter<number>();
   @Output() addTaskEvent = new EventEmitter<number>();
 
-  constructor(private todoService: TodoServiceService) {}
+  constructor(private todoService: TodoServiceService, private cd: ChangeDetectorRef) {}
 
   private _latestTodoWidget: number = 1;
   private _latestTask: number = 1;
@@ -46,6 +46,7 @@ export class TodoAddComponent implements OnInit {
       input.value = '';
     }
 
+
   }
 
   public async addTask(input: HTMLInputElement, event: Event) {
@@ -65,8 +66,10 @@ export class TodoAddComponent implements OnInit {
           todoId: this.todoId
         };
 
-        this.todoService.postTask(taskModel).subscribe(newTask =>
-          this.addTaskEvent.emit(newTask)
+        this.todoService.postTask(taskModel).subscribe(newTask => {
+          this.addTaskEvent.emit(newTask);
+          this.cd.detectChanges();
+        }
         );
 
         input.value = '';

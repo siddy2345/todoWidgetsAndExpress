@@ -14,19 +14,20 @@ export class TodoWidgetsComponent implements OnInit {
   @Input() todoViewModel: TodoViewModel[] = [];
   @Input() tasks: TaskModel[] = [];
 
-  public isInProgess: boolean = false;
-  public isTodoSelected: boolean = false;
+  public isInProgress: boolean = false;
   public closeSidebar: boolean = true; //true if sidebar should get closed
+  private _selectedTodo: TodoViewModel | undefined;
+  public counter: number = 1; //only if counter is even, the sidebar gets closed (clicking outside the div)
 
-  constructor(private todoService: TodoServiceService, private todoStore: TodoStoreService) { }
+  constructor(private todoService: TodoServiceService, private todoStore: TodoStoreService, private cd: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.getWidgets();
   }
 
   getWidgets(): void {
-    this.isInProgess = true;
-    this.todoService.getTodoViewModels().pipe(finalize(() => this.isInProgess = false)).subscribe(tvm => {this.todoViewModel = tvm; this.getTasks()});
+    this.isInProgress = true;
+    this.todoService.getTodoViewModels().pipe(finalize(() => this.isInProgress = false)).subscribe(tvm => {this.todoViewModel = tvm; this.getTasks()});
   }
 
   getTasks(): void {
@@ -34,11 +35,11 @@ export class TodoWidgetsComponent implements OnInit {
   }
 
   onDelete(widget: TodoViewModel): void {
-    this.isInProgess = true;
+    this.isInProgress = true;
     this.todoService.deleteTodo(widget.id).pipe(
       finalize(() => {
         this.todoViewModel.splice(this.todoViewModel.indexOf(widget), 1);
-        this.isInProgess = false;
+        this.isInProgress = false;
       })
       ).subscribe();
 
@@ -63,15 +64,22 @@ export class TodoWidgetsComponent implements OnInit {
   }
 
   changeProgressStatus(value: boolean): void {
-    this.isInProgess = value;
+    this.isInProgress = value;
   }
 
-  selectTodo(todo: TodoViewModel): void {
+  onClickTodo(todo: TodoViewModel): void {
     this.todoStore.updateSelectedTodos(todo);
+    this._selectedTodo = todo;
     this.setCloseSidebar(false);
   }
 
   setCloseSidebar(value: boolean) {
     this.closeSidebar = value;
+  }
+
+  onClickOutside(): void {
+    if(this.counter % 2 === 0)
+      this.setCloseSidebar(true);
+    this.counter++;
   }
 }
