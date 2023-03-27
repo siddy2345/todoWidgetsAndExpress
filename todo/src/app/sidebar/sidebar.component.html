@@ -2,8 +2,17 @@
   <div>
     <h2>Todo Details</h2>
     <p>Todo title: {{todo.title}}</p>
-    <p>Tasks: {{todo.tasks?.length}}</p>
     <p>Created at: {{todo.createdAt | date}}</p>
+    <p>Tasks:</p>
+    <ul>
+      <div *ngFor="let task of todo.tasks">
+
+            <li *ngIf="task.isDone" class="done">{{task.title}}</li>
+
+            <li *ngIf="!task.isDone">{{task.title}}</li>
+
+      </div>
+    </ul>
   </div>
   <div class="button">
     <button type="button" (click)="onClose()">x</button>

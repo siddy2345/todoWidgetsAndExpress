@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { delay, finalize, map, pipe, tap } from 'rxjs';
 import { TaskModel, TodoModel, TodoViewModel } from '../shared/models';
 import { TodoServiceService } from '../shared/todo-service.service';
@@ -14,10 +14,12 @@ export class TodoWidgetsComponent implements OnInit {
   @Input() todoViewModel: TodoViewModel[] = [];
   @Input() tasks: TaskModel[] = [];
 
+
   public isInProgress: boolean = false;
   public closeSidebar: boolean = true; //true if sidebar should get closed
   private _selectedTodo: TodoViewModel | undefined;
   public counter: number = 1; //only if counter is even, the sidebar gets closed (clicking outside the div)
+  public detailButton: HTMLButtonElement | undefined;
 
   constructor(private todoService: TodoServiceService, private todoStore: TodoStoreService, private cd: ChangeDetectorRef) { }
 
@@ -67,7 +69,7 @@ export class TodoWidgetsComponent implements OnInit {
     this.isInProgress = value;
   }
 
-  onClickTodo(todo: TodoViewModel): void {
+  onViewTodoDetails(todo: TodoViewModel): void {
     this.todoStore.updateSelectedTodos(todo);
     this._selectedTodo = todo;
     this.setCloseSidebar(false);
@@ -77,8 +79,12 @@ export class TodoWidgetsComponent implements OnInit {
     this.closeSidebar = value;
   }
 
-  onClickOutside(): void {
-    if(this.counter % 2 === 0)
+  onClickOutside(event: Event): void {
+    console.log(event.target);
+    console.log(this.detailButton);
+
+
+    if(this.counter % 2 === 0 && !(event.target === this.detailButton))
       this.setCloseSidebar(true);
     this.counter++;
   }

@@ -1,7 +1,18 @@
 .sidebar {
   display: flex;
+  height: 16rem;
+  overflow: auto;
 }
 
 .button {
   float: right;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+li {
+  list-style: decimal;
+  padding-bottom: 0.5rem;
 }
