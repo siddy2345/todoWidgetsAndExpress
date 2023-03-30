@@ -16,3 +16,7 @@ li {
   list-style: decimal;
   padding-bottom: 0.5rem;
 }
+
+span {
+  font-weight: bold;
+}

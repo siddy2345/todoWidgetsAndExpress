@@ -18,7 +18,6 @@ export class TodoWidgetsComponent implements OnInit {
   public isInProgress: boolean = false;
   public closeSidebar: boolean = true; //true if sidebar should get closed
   private _selectedTodo: TodoViewModel | undefined;
-  public counter: number = 1; //only if counter is even, the sidebar gets closed (clicking outside the div)
   public detailButton: HTMLButtonElement | undefined;
 
   constructor(private todoService: TodoServiceService, private todoStore: TodoStoreService, private cd: ChangeDetectorRef) { }
@@ -71,8 +70,15 @@ export class TodoWidgetsComponent implements OnInit {
 
   onViewTodoDetails(todo: TodoViewModel): void {
     this.todoStore.updateSelectedTodos(todo);
+
+    this.updateTaskState(this.tasks, todo.id);
+
     this._selectedTodo = todo;
     this.setCloseSidebar(false);
+  }
+
+  updateTaskState(tasks: TaskModel[], todoId: number) {
+    this.todoStore.updateSelectedTasks(this.filteredTasks(todoId));
   }
 
   setCloseSidebar(value: boolean) {
@@ -80,12 +86,8 @@ export class TodoWidgetsComponent implements OnInit {
   }
 
   onClickOutside(event: Event): void {
-    console.log(event.target);
-    console.log(this.detailButton);
-
-
-    if(this.counter % 2 === 0 && !(event.target === this.detailButton))
+    if(!(event.target === this.detailButton))
       this.setCloseSidebar(true);
-    this.counter++;
   }
+
 }

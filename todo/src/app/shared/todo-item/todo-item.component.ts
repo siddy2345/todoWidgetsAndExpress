@@ -14,6 +14,7 @@ export class TodoItemComponent implements OnInit {
   @Input() inProgess: boolean = false;
   @Output() deleteTaskEvent = new EventEmitter<void>();
   @Output() inProgessEvent = new EventEmitter<boolean>();
+  @Output() checkTaskEvent = new EventEmitter<void>();
   constructor(private todoService: TodoServiceService) { }
 
   ngOnInit(): void {
@@ -50,6 +51,8 @@ export class TodoItemComponent implements OnInit {
       })).subscribe();
 
     }
+
+    this.checkTaskEvent.emit();
 
     // this.inProgess = false;
   }

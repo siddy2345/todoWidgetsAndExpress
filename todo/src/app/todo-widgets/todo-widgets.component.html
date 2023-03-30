@@ -26,7 +26,7 @@
 
   <ng-template [ngIf]="!closeSidebar">
     <div (clickOutside)="onClickOutside($event)" class="sidebar">
-      <app-sidebar (closeSidebarEvent)="setCloseSidebar($event); counter = counter + 1"></app-sidebar>
+      <app-sidebar (closeSidebarEvent)="setCloseSidebar($event)"></app-sidebar>
     </div>
   </ng-template>
 
@@ -35,7 +35,7 @@
     <div id="{{widget.id}}" class="todoWidget" *ngFor="let widget of todoViewModel">
       <div class="headline">
         <div class="detail">
-          <button #detButton id="detail" type="button" (click)="onViewTodoDetails(widget); detailButton = detButton">Details</button>
+          <button #detButton id="detail" type="button" (click)="onViewTodoDetails(widget); detailButton = detButton; ">Details</button>
         </div>
         <div class="widgetTitle">
           <h5>{{widget.title}}</h5>
@@ -59,7 +59,8 @@
           (inProgessEvent)="changeProgressStatus($event)"
           class="todoAddWidget"
           [task]="task"
-          (deleteTaskEvent)="getWidgets()">
+          (deleteTaskEvent)="getWidgets()"
+          >
         </app-todo-item>
       </div>
     </div>

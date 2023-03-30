@@ -1,15 +1,20 @@
 <div class="sidebar" *ngFor="let todo of todoStore.todos$ | async">
   <div>
     <h2>Todo Details</h2>
-    <p>Todo title: {{todo.title}}</p>
-    <p>Created at: {{todo.createdAt | date}}</p>
-    <p>Tasks:</p>
+    <p><span>Todo title: </span>{{todo.title}}</p>
+    <p><span>Created at: </span>{{todo.createdAt | date}}</p>
+    <p><span>Tasks:</span></p>
     <ul>
-      <div *ngFor="let task of todo.tasks">
+      <div *ngFor="let task of todoStore.tasks$ | async">
 
-            <li *ngIf="task.isDone" class="done">{{task.title}}</li>
+        <!-- <div *ngIf="task"> -->
+          <li *ngIf="task.isDone" class="done">{{task.title}}</li>
 
-            <li *ngIf="!task.isDone">{{task.title}}</li>
+          <li *ngIf="!task.isDone">{{task.title}}</li>
+        <!-- </div> -->
+        <!-- <div *ngIf="!task">
+          <p>none</p>
+        </div> -->
 
       </div>
     </ul>
